@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import dash
+# import dash
 import plotly.figure_factory as ff
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 beneficiary = pd.read_csv("benificiary_d.csv")
 #beneficiary1= pd.read_csv("benificiary_c.csv")
