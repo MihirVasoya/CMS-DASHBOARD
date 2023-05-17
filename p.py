@@ -1,41 +1,31 @@
+#import required packeges
 import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
-# import dash
 import plotly.figure_factory as ff
-# import matplotlib.pyplot as plt
 
+#read csv file using pandas
 beneficiary = pd.read_csv("benificiary_d.csv")
-#beneficiary1= pd.read_csv("benificiary_c.csv")
 inpatient_c = pd.read_csv("inpatient_c.csv")
-# inpatient_f = pd.read_csv("inpatint_f.csv")
 outpatient_c = pd.read_csv("outpatient_c.csv")
-# outpatient_f = pd.read_csv("outpatient_f.csv")
-#demographic_clicked=False
+
+
 # Set page title and color
 st.set_page_config(page_title=" CMS Dashboard", page_icon=":bar_chart:", layout="wide", initial_sidebar_state="expanded")
 st.markdown(f"<h1 style='text-align: center; color: #35BAE2 ; width:1360px;height : 100px '>CMS Dashboard</h1>",unsafe_allow_html=True)
-#  f"<button style='background-color: white; margin: 5px;'>Demographic</button>",unsafe_allow_html=True)
 
-# Create three columns
-
-
-colors = ["#F57878", "#C70039", "#900C3F"]
-# Add content to each column
-
-#fig1 = px.bar(beneficiary, x='AGE_INTERVAL', y='AGE', color='GENDER', barmode='group')
-
-
-    
+# start sidebar menu where we can appply filters
 with st.sidebar:
+# start Demographic category
     st.markdown(
         '<div style="background-color: #060505; color:black;height: 50px; width: 298px; border-radius: 5px">'
         '<h2 style="text-align: center;color: white">Demographic</h2>'
         '</div>', unsafe_allow_html=True
     )
-    #st.markdown(f"<div style='background-color:{colors[0]}; height: 500px; display: flex; justify-content: center; align-items: center;'>"
-    a=['All']          
+   
+    a=['All'] 
+# four filter apply on demographic 
     options1=st.multiselect('Select age', options=['All'] + list(beneficiary['AGE_INTERVAL'].unique().tolist()),default=a)
     options2=st.multiselect('Select Gender', options=['All'] + list(beneficiary['GENDER'].unique().tolist()),default=a)
     options3=st.multiselect('Select Race', options=['All'] + list(beneficiary['RACE'].unique().tolist()),default=a)
@@ -46,7 +36,7 @@ with st.sidebar:
     
        
 
-        # Check the filters and update the data frame accordingly
+# Check the filters and update the data frame accordingly
     if 'All' in options1:
              filtered_df = beneficiary
     else:
@@ -63,23 +53,10 @@ with st.sidebar:
             
     
     
-    #count=len(filtered_df)
-
-#st.sidebar.markdown("### No Of Patient")
-#st.sidebar.write(f"Demographic: {len(filtered_df)}")
-
-       
-
-
-    # st.markdown(
-    #     '<div style="background-color: #060505;color:black; height: 50px; width: 456px; border-radius: 5px">'
-    #     '<h3 style="color: white">Clinical</h3>'
-    #     '</div>', unsafe_allow_html=True
-    # )
-
-# if st.sidebar.button('Filter'):
-    with st.sidebar:
+with st.sidebar:
+ #start Clinical category
         st.markdown(
+            
             '<div style="background-color: #060505;color:black; height: 50px; width: 298px; border-radius: 5px">'
             '<h2 style="text-align: center;color: white">Clinical</h2>'
             '</div>', unsafe_allow_html=True
@@ -91,6 +68,7 @@ with st.sidebar:
             
         diseases = ['ALZHEIMER','HEART FAILURE','KIDNEY','CANCER','CHRONIC OBSTRUCTIVE','DEPRESSN','DIABETES',
                 'ISCHEMIC HEART','OSTEOPOROROSIS','RHEUMATOID' ,'STROKE TRANSIENT ISCHEMIC']
+ # radio button toggel between Inclusive and Exclusive if click inclusive then perform "isin" else  perform "not in"
         option_1=st.radio( "",( "Inclusion",'Exclusion'),horizontal=True, key='checkbox1')
         selected_diseases = st.multiselect('Select diseases', options=diseases,default=['ALZHEIMER','HEART FAILURE'])
         year=['2010','2009','2008']
@@ -99,7 +77,7 @@ with st.sidebar:
         year_selected = st.selectbox('Select year', options=year)
             
             
-            
+ # add suffix on disease accroding based on year     
         if (year_selected == "2010"):
                     selected_diseases = [x + '_10' for x in selected_diseases]
         elif (year_selected == "2009"):
@@ -107,12 +85,12 @@ with st.sidebar:
         else:
                     selected_diseases = [x + '_08' for x in selected_diseases]
             
-            
-            
+
+# Check the filters and update the data frame accordingly           
         if option_1=="Exclusion":
             
             filtered_df=filtered_df[~filtered_df[selected_diseases].isin(['1']).any(axis=1)]
-            st.write(len(filtered_df))
+           
         else:
             filtered_df=filtered_df[filtered_df[selected_diseases].isin(['1']).any(axis=1)]
 
@@ -122,8 +100,11 @@ with st.sidebar:
         #     filtered_df=filtered_df[filtered_df[year_selected].isin(['1',1])]
         #     #st.sidebar.write(f"Clinical: {len(filtered_df1)}")
 
+        
+        
+# this dropdown is for two sub-catetory in clinical category
         option21 = st.selectbox("Select an option", [ "Inpatient", "Outpatient"])    
-    
+# this show inpatient filters
         if option21 == "Inpatient":
             a=['All']
             option_3=st.radio( "",( "Inclusion",'Exclusion'),horizontal=True, key='checkbox3')
@@ -170,7 +151,7 @@ with st.sidebar:
             #st.sidebar.write(f"Clinical: {len(filtered_df2)}")
 
 
-
+   # this show outpatient filters
         else: 
             a=['All'] 
             option_7=st.radio( "",( "Inclusion",'Exclusion'),horizontal=True, key='checkbox7')
@@ -182,7 +163,7 @@ with st.sidebar:
             option_9=st.radio( "",( "Inclusion",'Exclusion'),horizontal=True, key='checkbox9')
             options3 = st.multiselect("select a Diagnosis1_2", ["All"] + list(outpatient_c["ICD9_DGNS_CD_2"].unique()),default=a)
             #CD_3= st.multiselect("CD_3", ["All"] + list(inpatient["ICD9_DGNS_CD_3"].unique()))
-        # Procedure = st.multiselect("Select Procedure", ["All"] + list(inpatient["ICD9_PRCDR_CD_1"].unique()),default=a)
+            # Procedure = st.multiselect("Select Procedure", ["All"] + list(inpatient["ICD9_PRCDR_CD_1"].unique()),default=a)
 
             if 'All' in options1:
                 filtered_df1 = outpatient_c
@@ -209,8 +190,9 @@ with st.sidebar:
                 
         
                 
-            #st.sidebar.write(f"Clinical: {len(filtered_df2)}")
-    with st.sidebar:
+
+with st.sidebar:
+ #start financial category
         st.markdown(
             '<div style="background-color: #060505; height: 50px ; color:black; width: 298px; border-radius: 5px ">'
             '<h2 style=" text-align: center;color: white">Financial</h2>'
@@ -250,8 +232,9 @@ with st.sidebar:
         #         # filtered_df3 = outpatient_f
         #         filtered_df3 = outpatient_f[(outpatient_f['CLM_PMT_AMT'] >= values[0]) & (outpatient_f['CLM_PMT_AMT'] <= values[1])]
         #         # total=filtered_df3['CLM_PMT_AMT'].sum()
+ # in clinical category if celect inpatient then here show inpatient financial options
         if option21=='Inpatient':
-
+# this is claim amountslider so we can apply lower limit or upper limit 
             values = st.slider(
             label='Select a Range of  Claim Amount:',
             min_value=0,
@@ -259,7 +242,7 @@ with st.sidebar:
             value=(0, 8000),
             ) 
             filtered_df1 = filtered_df1[(filtered_df1['CLM_PMT_AMT'] >= values[0]) & (filtered_df1['CLM_PMT_AMT'] <= values[1])]
-            
+ #this is claim utilization slider   
             values = st.slider(
             label='Select a Range of  Claim Utilization :',
             min_value=0,
@@ -270,6 +253,7 @@ with st.sidebar:
             filtered_df1 = filtered_df1[(filtered_df1['CLM_UTLZTN_DAY_CNT'] >= values[0]) & (filtered_df1['CLM_UTLZTN_DAY_CNT'] <= values[1])]
 
         else:
+   #this is claim utilization slider
                 values = st.slider(
                 label='Select a Range of  Claim Amount:',
                 min_value=0,
@@ -281,21 +265,13 @@ with st.sidebar:
                 st.write(len(filtered_df1))
 
 
-
-            #st.sidebar.write(f"Financial: {len(filtered_df)}")
-            #st.sidebar.write(f"Total Claim Amount: {total}")
+# after filtering merge two dataframe base on "DESYNPUF_ID" and store in one data frame
 final1=filtered_df.merge(filtered_df1,how='inner',on=['DESYNPUF_ID'])         
-# st.sidebar.write(f"No of Claim: {len(final1)}")
-# st.sidebar.write(f"No of Unique Patient: {len(final1['DESYNPUF_ID'].unique())}")
 
+# remove duplicates based on "DESYNPUF_ID"
 df = final1.drop_duplicates(subset=["DESYNPUF_ID"], keep='first')
-# st.write(final1.head())
 
-# col11,col12=st.columns(2)
-
-# col11.metric("",f"No of Unique Patient: {len(final1['DESYNPUF_ID'].unique())}")
-# col12.metric("",(f"No of Claim: {len(final1)}"))
-
+# this style for  cards in this show counts of claims ,unique patients ,total amount of claims
 style = """
 div[data-testid="metric-value-container"] {
     font-size: 1rem;
@@ -337,10 +313,10 @@ with col13:
 
 
 
-
+# display window devides in to 3 columns
 col1, col2, col3 = st.columns(3)
 with col1:
-   
+# display histogram based on age wise analysis 
     fig = px.histogram(df,
                    x='AGE_INTERVAL',
                    text_auto=True,
