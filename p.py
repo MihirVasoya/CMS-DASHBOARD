@@ -199,39 +199,7 @@ with st.sidebar:
             '</div>', unsafe_allow_html=True
             )
 
-        # if option21=="Benificiary" :   
-        #     option = st.selectbox("Select an option", [ "inpatient", "outpatient"])
-        #     if option == "inpatient":
-        #         values = st.slider(
-        #         label='Select a Range of  Claim Amount:',
-        #         min_value=0,
-        #         max_value=57000,\
-        #         value=(0, 8000),
-        #         ) 
-        #         filtered_df3 = inpatient_f[(inpatient_f['CLM_PMT_AMT'] >= values[0]) & (inpatient_f['CLM_PMT_AMT'] <= values[1])]
-            
-        #         values = st.slider(
-        #         label='Select a Range of  Claim Utilization :',
-        #         min_value=0,
-        #         max_value=150,
-        #         value=(0, 50),
-        #         ) 
-        #         filtered_df3 = filtered_df3[(filtered_df3['CLM_UTLZTN_DAY_CNT'] >= values[0]) & (filtered_df3['CLM_UTLZTN_DAY_CNT'] <= values[1])]
-        #     #   total=filtered_df3['CLM_PMT_AMT'].sum()
-
-        #     #   st.sidebar.write(f"Financial: {len(filtered_df)}")
-        #     #   st.sidebar.write(f"Total Claim Amount: {total}")
-        #     else:
-            
-        #         values = st.slider(
-        #         label='Select a Range of  Claim Amount:',
-        #         min_value=0,
-        #         max_value=3300,
-        #         value=(0, 800),
-        #         ) 
-        #         # filtered_df3 = outpatient_f
-        #         filtered_df3 = outpatient_f[(outpatient_f['CLM_PMT_AMT'] >= values[0]) & (outpatient_f['CLM_PMT_AMT'] <= values[1])]
-        #         # total=filtered_df3['CLM_PMT_AMT'].sum()
+       
  # in clinical category if celect inpatient then here show inpatient financial options
         if option21=='Inpatient':
 # this is claim amountslider so we can apply lower limit or upper limit 
