@@ -366,7 +366,7 @@ with col02:
             ))
 
     fig00.update_layout(
-                title="Funnel Report",
+                #title="Funnel Report",
                 # height=800,
                 # width=500
             )
