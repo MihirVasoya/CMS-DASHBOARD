@@ -296,7 +296,7 @@ with col12:
 
 with col13:
     st.write('<style>{}</style>'.format(style), unsafe_allow_html=True)
-    st.metric("Total Claim Amount",(f"{filtered_df1['CLM_PMT_AMT'].sum()}$"))
+    st.metric("Total Claim Amount",(f"${filtered_df1['CLM_PMT_AMT'].sum()}"))
 
 
 
