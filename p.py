@@ -355,7 +355,8 @@ with col01:
             st.markdown(href, unsafe_allow_html=True)
 
 
-with col02: 
+with col02:
+    st.markdown(f"<h4 style='text-align: center; color: black ;height : 50px '>Funnel Report</h4>",unsafe_allow_html=True)
     label_font_size = 16
     fig00 = go.Figure(go.Funnel(
                 y=y,
