@@ -272,7 +272,7 @@ with col12:
 
 with col13:
     st.write('<style>{}</style>'.format(style), unsafe_allow_html=True)
-    st.metric("Total Claim Amount",(f"{final1['CLM_PMT_AMT'].sum()}$"))
+    st.metric("Total Claim Amount",(f"${final1['CLM_PMT_AMT'].sum()}"))
 
 
 
@@ -311,6 +311,37 @@ with col3:
         chart1.update(layout=dict(title=dict(x=0.1)))
         st.plotly_chart(chart1)
 
+        
+        
+        
+        
+col01,col02=st.columns(2)
+with col01:
+    st.write(df.head(10))
+    if st.button('Download CSV'):
+        # Convert DataFrame to CSV and download
+            csv = df.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # Encode to base64
+            href = f'<a href="data:file/csv;base64,{b64}" download="data.csv"> Click On For Download CSV File</a>'
+            st.markdown(href, unsafe_allow_html=True)
+
+
+with col02: 
+    label_font_size = 16
+    fig00 = go.Figure(go.Funnel(
+                y=y,
+                x=x,
+                textinfo="value+percent initial",
+                textfont={"size": label_font_size}
+            ))
+
+    fig00.update_layout(
+                title="Funnel Report",
+                # height=800,
+                # width=500
+            )
+
+    st.plotly_chart(fig00)
 # with col4:
 #     fig2 = go.Figure(data=go.Choropleth(
 #     locations=final1['STATE'], # Spatial coordinates
