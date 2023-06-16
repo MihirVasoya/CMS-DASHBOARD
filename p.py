@@ -196,21 +196,21 @@ with st.sidebar:
                 x.append(len(filtered_df1['DESYNPUF_ID'].unique()))
                 y.append(options1)
 
-            if 'All' not in options3:
+            if 'All' not in options2:
                 if option_8 =="Exclusion":
-                  filtered_df1 = filtered_df1[~filtered_df1['ICD9_DGNS_CD_1'].isin(options3)]
+                  filtered_df1 = filtered_df1[~filtered_df1['ICD9_DGNS_CD_1'].isin(options2)]
                 else:
-                    filtered_df1 = filtered_df1[filtered_df1['ICD9_DGNS_CD_1'].isin(options3)]
+                    filtered_df1 = filtered_df1[filtered_df1['ICD9_DGNS_CD_1'].isin(options2)]
                 x.append(len(filtered_df1['DESYNPUF_ID'].unique()))
                 y.append(options2)    
                 
-            if 'All' not in options2:
+            if 'All' not in options3:
                 if option_9 =="Exclusion":
-                  filtered_df1 = filtered_df1[~filtered_df1['ICD9  _DGNS_CD_2'].isin(options2)]
+                  filtered_df1 = filtered_df1[~filtered_df1['ICD9  _DGNS_CD_2'].isin(options3)]
                 else:
-                    filtered_df1 = filtered_df1[filtered_df1['ICD9_DGNS_CD_2'].isin(options2)]
+                    filtered_df1 = filtered_df1[filtered_df1['ICD9_DGNS_CD_2'].isin(options3)]
                 x.append(len(filtered_df1['DESYNPUF_ID'].unique()))
-                y.append(options1)
+                y.append(options3)
             
                 
         
